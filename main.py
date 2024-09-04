@@ -15,6 +15,7 @@ import yt_dlp
 from videodownloader import *
 #settings 
 import json
+import time
 
 
 # Initialiser Colorama
@@ -85,6 +86,7 @@ def FindAllOccurencesOfTag(tag, Html, NameOfSearchedFilm=None):
                     Occurences.append((clean_text, src))
                 else:
                     Occurences.append((clean_text, None))
+            
         else:
             if href:
                 Occurences.append((clean_text, href))
@@ -245,9 +247,15 @@ def updateJsonSetting(key, value):
         print("Le fichier settings.json n'existe pas. Veuillez d'abord le créer.")
     except json.JSONDecodeError:
         print("Erreur lors de la lecture du fichier JSON. Le format est peut-être incorrect.")
-        
+ 
+
+           
 def Menu():
-    defaultSettings = {"IgnoreReco" : False , "numberOfUse" : 0}
+    time.sleep(7)
+    print(f"")
+    os.system("clear")
+        
+    defaultSettings = {"IgnoreReco" : True , "numberOfUse" : 0}
     try:
         with open('settings.json', 'r') as file:
             settings = json.load(file)
@@ -285,7 +293,6 @@ def Menu():
             f"{Back.LIGHTYELLOW_EX}{Fore.BLACK}Because of the non exactly legal website the script is scrapping (exacting informations of the web page){Fore.RESET}{Back.RESET}",
             f"{Back.RED}The author of the script declines all responsibility if you get into trouble with any laws of any country, you're using my tool at your own risk! {Back.RESET}",
             f"{Back.GREEN}It is strongly recommended to use a VPN {Back.RESET}to hide your IP address from your ISP. {Back.GREEN}I recommend ProtonVPN {Back.RESET}(the only good free VPN nowadays) -> https://protonvpn.com/ ",
-            f"End of the paranoid old man's recommendations 😂  ",
             f"{Fore.GREEN}Happy Streaming!{Style.RESET_ALL}"
         ]
 
@@ -294,15 +301,9 @@ def Menu():
         for recommandation in recommandations:
             print(recommandation)
         
-        IgnoreReco = Prompt.ask("\nVoulez vous arréter d'afficher ces recommendations (Oui/Non)? : ", choices=["Oui","Non"])
-        if IgnoreReco.lower() == "oui":
-            updateJsonSetting("IgnoreReco",True)
-            print(f"{Fore.GREEN}Vous ne serez plus dérangez par ces recommandations de con continuez le streaming !{Style.RESET_ALL}")
-        elif IgnoreReco.lower() == "non":
-            updateJsonSetting("IgnoreReco",False)
-            print(f"{Fore.GREEN}Vous avez la vlonté de sontinuer à regarder illégalement vous films mais vous voulez qu'on vous le rappel... pourquoi pas 🤣{Style.RESET_ALL}")
-        else:
-            print(f"{FailMessage}Erreur lors de la lecture de la réponse{Style.RESET_ALL}")
+        #affichera seulement une fois les avertissement 
+        updateJsonSetting("IgnoreReco",True)
+       
     
     
     # Obtenir la sélection de l'utilisateur
@@ -318,6 +319,8 @@ def Menu():
             ShowResults(occurences, SearchedTag, Searchword)
         else:
             print(f"{FailMessage}Erreur lors de la recherche du film.")
+        
+        Menu()
 
     elif choice == "2":
         console.print("Vous avez choisi l'Option 2", style="bold yellow")
@@ -340,6 +343,8 @@ def Menu():
             print(f"{FailMessage}Erreur lors de la récupération de la page du film.")
             #open the link in a full screen windows
         
+        Menu()
+        
     elif choice == "3":
         console.print("Vous avez choisi l'Option 3", style="bold yellow")
         link = Prompt.ask("Entrez le lien complet de la page du film sur Kibriv (utilisez l'option 1 si vous ne l'avez pas encore)")
@@ -361,6 +366,8 @@ def Menu():
         else:
             print(f"{FailMessage}Erreur lors de la récupération de la page du film.{Fore.RESET}")
             #open the link in a full screen windows
+        
+        Menu()
     
     elif choice == "4":
         console.print("Vous avez choisi l'Option 4. Quitter le programme.", style="bold red")
