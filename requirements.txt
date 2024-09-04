@@ -1,0 +1,6 @@
+beautifulsoup4==4.8.0
+colorama==0.4.6
+pywebview==5.0.5
+Requests==2.32.3
+rich==13.8.0
+yt_dlp==2024.8.6
