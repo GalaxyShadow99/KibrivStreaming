@@ -1,4 +1,5 @@
 {
-    "IgnoreReco": true,
-    "numberOfUse": 0
+    "downloadPath": "/Users/macminithomasconstantin/Desktop/projets_perso/film",
+    "baseUrl": "default",
+    "homeUrl": "default"
 }
